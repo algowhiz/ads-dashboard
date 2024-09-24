@@ -36,7 +36,6 @@ const AdDetails = () => {
           <iframe
             className="w-full h-64"
             src={adDetails.videoUrl}
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>

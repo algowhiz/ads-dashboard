@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import SuccessModal from '../utils/SuccessModal';
 
 const MediaComponent = ({ text = "false" }) => {
     const [errors, setErrors] = useState({});
-    const [allFieldsFilled, setAllFieldsFilled] = useState(false)
+    const [allFieldsFilled, setAllFieldsFilled] = useState(false);
+    const [isModalVisible, setModalVisible] = useState(false);
     const [formData, setFormData] = useState({
         heading1: '',
         heading2: '',
@@ -16,6 +18,10 @@ const MediaComponent = ({ text = "false" }) => {
         buttonLabel: '',
         websiteUrl: '',
     });
+
+    const closeModal = () => {
+        setModalVisible(false);
+      };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,7 +42,7 @@ const MediaComponent = ({ text = "false" }) => {
         const allFieldsFilled = requiredFields.every(field => formData[field].trim() !== "" || newErrors[field]);
 
         console.log(allFieldsFilled);
-        
+
 
         allFieldsFilled ? setAllFieldsFilled(true) : setAllFieldsFilled(false);
     };
@@ -60,7 +66,21 @@ const MediaComponent = ({ text = "false" }) => {
 
         localStorage.setItem('adData', JSON.stringify(updatedData));
 
+        setModalVisible(true);
+
         console.log('Form submitted:', updatedData);
+        setFormData({
+            heading1: '',
+            heading2: '',
+            description: '',
+            landscapeImage: '',
+            portraitImage: '',
+            squareImage: '',
+            videoUrl: '',
+            businessName: '',
+            buttonLabel: '',
+            websiteUrl: '',
+        });
     };
 
     return (
@@ -231,6 +251,11 @@ const MediaComponent = ({ text = "false" }) => {
                         type="submit" className={` text-gray-500 py-2 px-12 hover:shadow-lg hover:shadow-gray-300 rounded ${allFieldsFilled ? 'bg-[#0096FF] text-white' : 'bg-[#E0E0E0] cursor-not-allowed text-[#B9B9B9]'}`}>Submit</button>
                 </div>
             </form>
+            {isModalVisible && <SuccessModal
+                message="Submission Successful!"
+                isVisible={isModalVisible}
+                onClose={closeModal}
+            />}
         </div>
     );
 };

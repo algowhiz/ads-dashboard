@@ -17,7 +17,7 @@ const AdInsightsTable = ({ initialCampaigns, showHeader, tableHeading }) => {
         return acc;
     }, { clicks: 0, cost: 0, conversions: 0, revenue: 0 });
 
-    
+
     const handleSort = (field, order) => {
         setSortField(field);
         setSortOrder(order);
@@ -26,12 +26,11 @@ const AdInsightsTable = ({ initialCampaigns, showHeader, tableHeading }) => {
             if (sortOrder === 'asc') {
                 order = null;
             } else if (sortOrder === 'desc') {
-                order = null; // Reset sorting
+                order = null;
             }
         }
 
         if (order === null) {
-            // Reset to the initial data if order is null
             setCampaigns(initialCampaigns);
             setSortField(null);
             setSortOrder(null);
@@ -76,10 +75,7 @@ const AdInsightsTable = ({ initialCampaigns, showHeader, tableHeading }) => {
                                 {tableHeading.map((header, idx) => (
                                     <th key={idx} className="p-2">
                                         <div className="flex justify-between items-center">
-                                            {/* Displaying the header text */}
                                             <span className="text-[#4F5355] flex-grow">{header}</span>
-
-                                            {/* Sorting icons for all columns */}
                                             <div className="flex flex-col items-center gap-0">
                                                 <MdOutlineKeyboardArrowUp
                                                     onClick={() => { handleSort(header.toLowerCase(), "asc") }}

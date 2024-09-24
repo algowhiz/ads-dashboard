@@ -6,13 +6,11 @@ const AdCards = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Fetch data from localStorage
     const storedAds = JSON.parse(localStorage.getItem('adData')) || [];
     setAds(storedAds);
   }, []);
 
   const handleCardClick = (index) => {
-    // Navigate to details page with the clicked card's data
     router.push(`/ads/${index}`);
   };
 
