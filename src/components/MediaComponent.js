@@ -6,6 +6,7 @@ const MediaComponent = ({ text = "false" }) => {
     const [errors, setErrors] = useState({});
     const [allFieldsFilled, setAllFieldsFilled] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
+    const [submit, setSubmit] = useState(false);
     const [formData, setFormData] = useState({
         heading1: '',
         heading2: '',
@@ -58,6 +59,7 @@ const MediaComponent = ({ text = "false" }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setSubmit(true);
 
         // getting prev data
         const previousData = JSON.parse(localStorage.getItem('adData')) || [];
@@ -68,7 +70,7 @@ const MediaComponent = ({ text = "false" }) => {
 
         setModalVisible(true);
 
-        console.log('Form submitted:', updatedData);
+        // console.log('Form submitted:', updatedData);
         setFormData({
             heading1: '',
             heading2: '',
@@ -81,6 +83,8 @@ const MediaComponent = ({ text = "false" }) => {
             buttonLabel: '',
             websiteUrl: '',
         });
+        setSubmit(false);
+        setAllFieldsFilled(false);
     };
 
     return (
@@ -137,7 +141,7 @@ const MediaComponent = ({ text = "false" }) => {
                 {/* Image URLs */}
                 {text === "false" && (
                     <div className='flex flex-col mt-6'>
-                        <div className='flex  gap-6'>
+                        <div className='flex flex-col md:flex-row gap-6'>
                             <div className='w-full sm:w-1/3'>
                                 <label htmlFor="landscapeImage" className="block mb-3">Landscape Marketing Image (1.9:1)</label>
                                 <input
@@ -195,7 +199,7 @@ const MediaComponent = ({ text = "false" }) => {
                 )}
 
                 {/* Business Info */}
-                <div className='flex gap-4 mt-6'>
+                <div className='flex flex-col md:flex-row gap-4 mt-6'>
                     <div className='w-full sm:w-1/2'>
                         <label htmlFor="businessName" className="block mb-3">Business Name</label>
                         <input
@@ -248,7 +252,7 @@ const MediaComponent = ({ text = "false" }) => {
                     <button
                         disabled={!allFieldsFilled}
                         onClick={handleSubmit}
-                        type="submit" className={` text-gray-500 py-2 px-12 hover:shadow-lg hover:shadow-gray-300 rounded ${allFieldsFilled ? 'bg-[#0096FF] text-white' : 'bg-[#E0E0E0] cursor-not-allowed text-[#B9B9B9]'}`}>Submit</button>
+                        type="submit" className={` text-gray-500 py-2 px-12 hover:shadow-lg hover:shadow-gray-300 rounded ${allFieldsFilled ? 'bg-[#0096FF] text-white' : 'bg-[#E0E0E0] cursor-not-allowed text-[#B9B9B9]'}`}>{submit ? "submitting" :"Submit"}</button>
                 </div>
             </form>
             {isModalVisible && <SuccessModal
